@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include QMK_KEYBOARD_H
 #include "keymap_fr_ch.h"
 #include <stdio.h>
@@ -114,8 +115,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
       LGUI(KC_SPC),            KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
       KC_LGUI,                 KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-      MO(_OPTIONS),            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,  KC_LCTL,KC_DELETE,KC_PSCR,LGUI(KC_SPC),KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
-             KC_CAPS, LT(_SYMBOLS, KC_ESC), KC_LCTL, KC_LSFT, KC_LALT, KC_TAB , KC_BSPC, KC_SPC, LT(_NUMBERS, KC_ENT), KC_MUTE
+      MO(_OPTIONS),            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,  KC_LCTL,KC_PSCR, KC_DEL, LCTL(KC_LSFT),KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
+                               KC_CAPS, LT(_SYMBOLS, KC_ESC), KC_LCTL, KC_LSFT, KC_TAB , KC_BSPC, KC_LALT, KC_SPC, LT(_NUMBERS, KC_ENT), KC_MUTE
     ),
 /*
  * Symbols
@@ -132,8 +133,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SYMBOLS] = LAYOUT(
-      _______, _______, CH_DEG , CH_CIRC, CH_EURO, _______,                                     KC_PERC, KC_LCBR, KC_RCBR, KC_HASH, KC_CIRC, _______,
-      _______, _______, CH_EGRV, CH_EACU, CH_AGRV, _______,                                     KC_EXLM, KC_LBRC, KC_RBRC, KC_PIPE, KC_AT  , _______,
+      _______, _______, CH_DEG , CH_EURO, CH_EGRV, _______,                                     KC_PERC, KC_LCBR, KC_RCBR, KC_HASH, KC_CIRC, _______,
+      _______, _______, CH_EGRV, CH_CIRC, CH_EGRV, _______,                                     KC_EXLM, KC_LBRC, KC_RBRC, KC_PIPE, KC_AT  , _______,
       _______, _______, CH_DIAE, CH_GRV , CH_CCED, _______, _______, _______, KC_AMPR, KC_EQL , KC_ASTR, KC_LPRN, KC_RPRN, KC_BSLS, KC_TILD, _______,
                                  _______, _______, _______, _______, _______, KC_DLR , KC_GRV , _______,MO(_NAV), _______
     ),
@@ -408,7 +409,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         if (clockwise) {
             tap_code(KC_WH_U);
         } else {
-            tap_code(KC_WH_U);
+            tap_code(KC_WH_D);
         }
     }
     else if (index == 1) {
