@@ -115,8 +115,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
       LGUI(KC_SPC),            KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
       KC_LGUI,                 KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-      MO(_OPTIONS),            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,  KC_LCTL,KC_PSCR, KC_DEL, LCTL(KC_LSFT),KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
-                               KC_CAPS, LT(_SYMBOLS, KC_ESC), KC_LCTL, KC_LSFT, KC_TAB , KC_BSPC, KC_LALT, KC_SPC, LT(_NUMBERS, KC_ENT), KC_MUTE
+      MO(_OPTIONS),            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,  KC_LSFT,KC_PSCR, KC_DEL, LCTL(KC_LSFT),KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
+                               KC_CAPS, LT(_SYMBOLS, KC_ESC), KC_LSFT, KC_LCTL, KC_TAB , KC_BSPC, KC_LALT, KC_SPC, LT(_NUMBERS, KC_ENT), KC_MUTE
     ),
 /*
  * Symbols
@@ -392,12 +392,12 @@ static void render_status(void) {
 
 void oled_task_user(void) {
     if (is_keyboard_master()) {
+        render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+    } else {
 				render_anim();
 				oled_set_cursor(0,6);
 				sprintf(wpm_str, "       WPM: %03d", get_current_wpm());
 				oled_write(wpm_str, false); 
-    } else {
-        render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
     }
 }
 #endif

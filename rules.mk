@@ -4,6 +4,7 @@ RGBLIGHT_ENABLE = no      # Enable keyboard RGB underglow
 BACKLIGHT_ENABLE = no
 MOUSEKEY_ENABLE = yes      # Enable mouse keys
 WPM_ENABLE = yes      		 # Enable WPM measurement
+SPLIT_TRANSPORT = mirror   # Allow to have information sent on both sides
 
 EXTRAFLAGS += -flto
 

@@ -31,6 +31,7 @@
 #define NO_ACTION_FUNCTION
 #define NO_ACTION_ONESHOT
 /* #define NO_ACTION_TAPPING */
+#define ENCODER_RESOLUTION 2
 
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
