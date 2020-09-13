@@ -1,19 +1,3 @@
-/* Copyright 2019 Thomas Baart <thomas@splitkb.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 #include QMK_KEYBOARD_H
 #include "keymap_fr_ch.h"
 #include <stdio.h>
@@ -21,85 +5,54 @@
 char wpm_str[10];
 
 enum layers {
-    _QWERTY = 0,
+    _WIN = 0,
+    _LINUX,
+    _GAMING,
     _SYMBOLS,
     _NUMBERS,
     _NAV,
     _OPTIONS
 };
 
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/*
- *
- * Base Layer: QWERTY
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  è (CH)|
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ; :  |  à (CH)|
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |Tog Opt.|   Z  |   X  |   C  |   V  |   B  | Alt  | Del  |  | - _  | " '  |   N  |   M  | , <  | . >  | / ?  |  é (CH)|
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |shutd.|Symbol| Shift| Ctrl | Tab  |  | Super| Bksp | Space|Number| Mute |
- *                        |desks?| Esc  | CapsL|      |      |  |      |      |      | Enter| Vol  |
- *                        `----------------------------------'  `----------------------------------'
- *
- * Symbols
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      | ^(CH)|      |      |                              |   %  |  {   |  }   |  #   |  ^   |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        | °(CH)| "(CH)| `(CH)| ç(CH)| €(CH)|                              |   *  |  [   |  ]   |  |   |  @   |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |  &   |  =   |   !  |  (   |  )   |  \   |  ~   |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |  $   |  `   |      | Nav  |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- *
- * Numbers and F keys
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  F9  | F10  | F11  | F12  |      |                              |  -   |  7   |  8   |  9   |  /   |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  F5  |  F6  |  F7  |  F8  | Super|                              |  +   |  4   |  5   |  6   |  *   |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |  F1  |  F2  |  F3  |  F4  |      |      |      |  |      |      |  0   |  1   |  2   |  3   |  .   |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      | Nav  |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- *
- * Navigation + media
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      | MBut1| MUp  | MBut2| MBut3|                              |      | Home | PgDn | PgUp | End  |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      | MLeft| MDown|MRight|      |                              |      | Left | Down |  Up  | Right|        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        | Alt  | Shift| Ctrl | Super|      |      |      |  |      |      |      | Prev | Play | Next |      |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- * 
- *  Options 
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |                              | TOG  | SAI  | HUI  | VAI  | MOD  |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |      |      |      | SAD  | HUD  | VAD  | RMOD |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- *
- */
+// // Tap Dance declarations
+// enum {
+//     TD_CS,
+// };
+
+// // Tap Dance definitions
+// qk_tap_dance_action_t tap_dance_actions[] = {
+//     // Tap once for Escape, twice for Caps Lock
+//     [TD_CS] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, LCTL(KC_LSFT)),
+// };
+
+// // this tapdance shouldn't work as it seems the modifier means I would need something like the example 5 here: https://beta.docs.qmk.fm/using-qmk/software-features/feature_tap_dance
+
+// const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
 
 /*  
- * Base Layer: QWERTY
+ * Base Layer: Windows
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |k.layout|   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  - _   |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * | Super  |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ; :  |  ' "   |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | Options|   Z  |   X  |   C  |   V  |   B  | Alt  | Del  |  | - _  | ' "  |   N  |   M  | , <  | . >  | / ?  |  = +   |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |shutd.|Symbol| Shift| Ctrl | Tab  |  | Super| Bspc | Space|Number| Mute |
+ *                        |desks?| Esc  | CapsL|      |      |  |      |      |      | Enter| Vol  | 
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_WIN] = LAYOUT(
+      LGUI(KC_SPC), KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+      KC_LGUI,      KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,  KC_LSFT,_______, KC_DEL, ________ ,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
+                               KC_CAPS, LT(_SYMBOLS, KC_ESC), KC_LSFT, KC_LCTL, KC_TAB , KC_BSPC, KC_LALT, KC_SPC, LT(_NUMBERS, KC_ENT), KC_MUTE
+    ),
+
+/*  
+ * Base Layer: Linux
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  è (CH)|
@@ -112,12 +65,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |desks?| Esc  | CapsL|      |      |  |      |      |      | Enter| Vol  |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_QWERTY] = LAYOUT(
-      LGUI(KC_SPC),            KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-      KC_LGUI,                 KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-      MO(_OPTIONS),            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,  KC_LSFT,KC_PSCR, KC_DEL, LCTL(KC_LSFT),KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
+    [_LINUX] = LAYOUT(
+      LGUI(KC_SPC), KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+      KC_LGUI,      KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,  KC_LSFT,_______, KC_DEL, ________ ,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
                                KC_CAPS, LT(_SYMBOLS, KC_ESC), KC_LSFT, KC_LCTL, KC_TAB , KC_BSPC, KC_LALT, KC_SPC, LT(_NUMBERS, KC_ENT), KC_MUTE
     ),
+  
+ /*  
+ * Base Layer: Gaming
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  è (CH)|
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |  Alt   |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ; :  |  à (CH)|
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | Options|   Z  |   X  |   C  |   V  |   B  | Alt  | Del  |  | - _  | ' "  |   N  |   M  | , <  | . >  | / ?  |  é (CH)|
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |shutd.|Symbol| Shift| Ctrl | Tab  |  | Super| Bspc | Space|Number| Mute |
+ *                        |desks?| Esc  | CapsL|      |      |  |      |      |      | Enter| Vol  |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_GAMING] = LAYOUT(
+      KC_TAB,       KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+      KC_LCTL,      KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,  KC_LGUI,KC_PSCR, KC_DEL, LCTL(KC_LSFT),KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
+                               KC_CAPS, LT(_SYMBOLS, KC_ESC), KC_SPC, KC_LSFT, KC_TAB , KC_BSPC, KC_LALT, KC_SPC, LT(_NUMBERS, KC_ENT), KC_MUTE
+    ),
+  
+
 /*
  * Symbols
  *
@@ -162,20 +138,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Navigation + media
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      | MBut1| MUp  | MBut2| MBut3|                              |      | Home | PgDn | PgUp | End  |        |
+ * |        |      |      |      |      |      |                              |      | Home | PgDn | PgUp | End  |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      | MLeft| MDown|MRight|      |                              |      | Left | Down |  Up  | Right|        |
+ * |        |      |      |      |      |      |                              |      | Left | Down |  Up  | Right|        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        | Alt  | Shift| Ctrl | Super|      |      |      |  |      |      |      | Prev | Play | Next |      |        |
+ * |        | Alt  | Shift| Ctrl | Super|      |      |      |  |      |      |      |      |      |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAV] = LAYOUT(
-      _______, _______, KC_BTN1, KC_MS_U, KC_BTN2, KC_BTN3,                                     KC_HOME, KC_PGDN, KC_PGUP, KC_END , _______, _______, 
-      _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______, _______,
-      _______, KC_LALT, KC_LSFT, KC_LCTL, KC_LGUI, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                     KC_HOME, KC_PGDN, KC_PGUP, KC_END , _______, _______, 
+      _______, _______, _______, _______, _______, _______,                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______, _______,
+      _______, KC_LALT, KC_LSFT, KC_LCTL, KC_LGUI, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -364,30 +340,33 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
-            oled_write_P(PSTR("Default\n"), false);
+        case _WIN:
+            oled_write_P(PSTR("windows\n"), false);
+            break;
+        case _LINUX:
+            oled_write_P(PSTR("linux\n"), false);
+            break;
+        case _GAMING:
+            oled_write_P(PSTR("gaming\n"), false);
             break;
         case _SYMBOLS:
-            oled_write_P(PSTR("Symbols\n"), false);
-            break;
-        case _NUMBERS:
-            oled_write_P(PSTR("Numbers\n"), false);
+            oled_write_P(PSTR("symbols\n"), false);
             break;
         case _NAV:
-            oled_write_P(PSTR("Navigation\n"), false);
+            oled_write_P(PSTR("navigation\n"), false);
             break;
         case _OPTIONS:
-            oled_write_P(PSTR("Options\n"), false);
+            oled_write_P(PSTR("options\n"), false);
             break;
         default:
-            oled_write_P(PSTR("Undefined\n"), false);
+            oled_write_P(PSTR("undefined\n"), false);
     }
 
     // Host Keyboard LED Status
     uint8_t led_usb_state = host_keyboard_leds();
-    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK) ? PSTR("NUMLCK ") : PSTR("       "), false);
-    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_CAPS_LOCK) ? PSTR("CAPLCK ") : PSTR("       "), false);
-    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLCK ") : PSTR("       "), false);
+    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK) ? PSTR("numlck ") : PSTR("       "), false);
+    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_CAPS_LOCK) ? PSTR("caplck ") : PSTR("       "), false);
+    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("scrllck ") : PSTR("       "), false);
 }
 
 void oled_task_user(void) {
@@ -404,20 +383,24 @@ void oled_task_user(void) {
 
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        // Volume control
-        if (clockwise) {
-            tap_code(KC_WH_U);
-        } else {
-            tap_code(KC_WH_D);
-        }
+   if (index == 0) {
+		switch (index) {
+			case 0:
+			if (!clockwise && selected_layer  < 3) {
+				selected_layer ++;
+			} else if (clockwise && selected_layer  > 0){
+				selected_layer --;
+			}
+			layer_clear();
+			layer_on(selected_layer);
+		}
     }
     else if (index == 1) {
         // Page up/Page down
         if (clockwise) {
-            tap_code(KC_VOLD);
-        } else {
             tap_code(KC_VOLU);
+        } else {
+            tap_code(KC_VOLD);
         }
     }
 }
