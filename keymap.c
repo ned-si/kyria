@@ -1,34 +1,197 @@
 #include QMK_KEYBOARD_H
+#include "keymap.h"
+#include "accented_letters.h"
 #include "keymap_fr_ch.h"
 #include <stdio.h>
 
 char wpm_str[10];
 
-enum layers {
-    _WIN = 0,
-    _LINUX,
-    _GAMING,
-    _SYMBOLS,
-    _NUMBERS,
-    _NAV,
-    _OPTIONS
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    mod_state = get_mods();
+    switch (keycode) {
+
+    case KC_ESC:
+        // Home row alt-tabbing.
+        if (mod_state & MOD_MASK_ALT) {
+            if (record->event.pressed) {
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            return false;
+        }
+        // Else, let QMK process the KC_ESC keycode as usual
+        return true;
+
+    return true;
 };
 
-// // Tap Dance declarations
-// enum {
-//     TD_CS,
-// };
+// Tap dance states
+typedef enum {
+  SINGLE_TAP,
+  SINGLE_HOLD,
+  DOUBLE_SINGLE_TAP
+} td_state_t;
 
-// // Tap Dance definitions
-// qk_tap_dance_action_t tap_dance_actions[] = {
-//     // Tap once for Escape, twice for Caps Lock
-//     [TD_CS] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, LCTL(KC_LSFT)),
-// };
+// create a global instance of the tapdance state type
+static td_state_t td_state;
+
+// function to track the current tapdance state
+int cur_dance (qk_tap_dance_state_t *state);
+
+// `finished` function for each tapdance keycode
+void CA_CC_CV_finished (qk_tap_dance_state_t *state, void *user_data);
+
+void sentence_end(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+
+        // Double tapping TD_DOT produces
+        // ". <one-shot-shift>" i.e. dot, space and capitalize next letter.
+        // This helps to quickly end a sentence and begin another one
+        // without having to hit shift.
+        case 2:
+            /* Check that Shift is inactive */
+            if (!(get_mods() & MOD_MASK_SHIFT)) {
+                tap_code(KC_SPC);
+                /* Internal code of OSM(MOD_LSFT) */
+                set_oneshot_mods(MOD_LSFT | get_oneshot_mods());
+            } else {
+                // send ">" (KC_DOT + shift → ">")
+                tap_code(KC_DOT);
+            }
+            break;
+
+        // Since `sentence_end` is called on each tap
+        // and not at the end of the tapping term,
+        // the third tap needs to cancel the effects 
+        // of the double tap in order to get the expected
+        // three dots ellipsis.
+        case 3:
+            // remove the added space of the double tap case
+            tap_code(KC_BSPC);
+            // replace the space with a second dot
+            tap_code(KC_DOT);
+            // tap the third dot
+            tap_code(KC_DOT);
+            break;
+
+        // send KC_DOT on every normal tap of TD_DOT
+        default:
+            tap_code(KC_DOT);
+    }
+};
+
+void exclamative_sentence_end(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 2) {
+            SEND_STRING("! ");
+            set_oneshot_mods(MOD_LSFT | get_oneshot_mods());
+    } else {
+        for (uint8_t i = state->count; i > 0; i--) {
+            tap_code16(KC_EXLM);
+        }
+    }
+};
+
+
+// `finished` function for each tapdance keycode
+void CA_CC_CV_finished (qk_tap_dance_state_t *state, void *user_data);
+
+// track the tapdance state to return
+int cur_dance (qk_tap_dance_state_t *state) {
+  if (state->count == 1) {
+    if (state->interrupted || !state->pressed) {
+        return SINGLE_TAP;
+    } else {
+        return SINGLE_HOLD;
+    }
+  }
+  if (state->count == 2) {
+      return DOUBLE_SINGLE_TAP;
+  }
+  else {
+      return 3; // any number higher than the maximum state value you return above
+  }
+};
+
+// handle the possible states for each tapdance keycode you define:
+
+void CA_CC_CV_finished(qk_tap_dance_state_t *state, void *user_data) {
+  td_state = cur_dance(state);
+  switch (td_state) {
+    case SINGLE_TAP:
+      tap_code16(C(KC_C));
+      break;
+    case SINGLE_HOLD:
+      tap_code16(C(KC_A));
+      break;
+    case DOUBLE_SINGLE_TAP:
+      tap_code16(C(KC_V));
+  }
+};
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [DOT_TD] = ACTION_TAP_DANCE_FN_ADVANCED(sentence_end, NULL, NULL),
+    [XCLM_TD] = ACTION_TAP_DANCE_FN (exclamative_sentence_end),
+    [CA_CC_CV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, CA_CC_CV_finished, NULL),
+};
+
+
+/*
+ * Per key tapping term settings
+ */
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_A:
+            return TAPPING_TERM - 20;
+        case HOME_S:
+            return TAPPING_TERM - 20;
+        case HOME_D:
+            return TAPPING_TERM - 20;
+        case HOME_F:
+            return TAPPING_TERM - 20;
+        case HOME_G:
+            return TAPPING_TERM - 20;
+        case HOME_H:
+            return TAPPING_TERM - 20;
+        case HOME_J:
+            return TAPPING_TERM - 20;
+        case HOME_K:
+            return TAPPING_TERM - 20;
+        case HOME_L:
+            return TAPPING_TERM - 20;
+        case HOME_SCLN:
+            return TAPPING_TERM - 20;
+        default:
+            return TAPPING_TERM;
+    }
+};
+
+
 
 // // this tapdance shouldn't work as it seems the modifier means I would need something like the example 5 here: https://beta.docs.qmk.fm/using-qmk/software-features/feature_tap_dance
 
 // const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
+/*  
+ * Base Layer: New layout
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |k.layout|   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  - _   |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * | Super  |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ; :  |  ' "   |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | Options|   Z  |   X  |   C  |   V  |   B  | Alt  | Del  |  | - _  | ' "  |   N  |   M  | , <  | . >  | / ?  |  = +   |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |shutd.|Symbol| Shift| Ctrl | Tab  |  | Super| Bspc | Space|Number| Mute |
+ *                        |desks?| Esc  | CapsL|      |      |  |      |      |      | Enter| Vol  | 
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_NEW] = LAYOUT(
+      LGUI(KC_SPC), KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    UC_M_WC,
+      KC_LGUI,    HOME_A, HOME_S, HOME_D, HOME_F, HOME_G,                                       HOME_H,  HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, UC_M_LN,
+      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   CACCCV,_______, DED_CIR,    UC_MOD,    KC_N,    KC_M,    KC_COMM, TD_DOT,  KC_SLSH, KC_EQL ,
+                               KC_CAPS, MO(_SYMBOLS), KC_LSFT,   UNDO, REDO, KC_DEL, KC_BSPC, KC_SPC, MO(_NUMBERS), KC_MUTE
+    ),
 
 /*  
  * Base Layer: Windows
@@ -114,6 +277,28 @@ enum layers {
       _______, _______, CH_DIAE, CH_GRV , CH_CCED, _______, _______, _______, KC_AMPR, KC_EQL , KC_ASTR, KC_LPRN, KC_RPRN, KC_BSLS, KC_TILD, _______,
                                  _______, _______, _______, _______, _______, KC_DLR , KC_GRV , _______,MO(_NAV), _______
     ),
+
+/*
+ * Accents
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |      |      | ^(CH)|      |      |                              |   %  |  {   |  }   |  #   |  ^   |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        | °(CH)| "(CH)| `(CH)| ç(CH)| €(CH)|                              |   *  |  [   |  ]   |  |   |  @   |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |      |  |  &   |  =   |   !  |  (   |  )   |  \   |  ~   |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |  $   |  `   |      | Nav  |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_ACCENTS] = LAYOUT(
+       _______, A_CIRCU, _______, E_ACUTE, E_GRAVE, _______,                                     _______, U_CIRCU, I_CIRCU, O_CIRCU, _______, _______,
+       _______, A_GRAVE, _______, E_CIRCU, _______, _______,                                     _______, _______, I_UMLAU, O_UMLAU, _______, _______,
+       _______, _______, _______, C_CDILA, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
 /*
  * Numbers and F keys
  *
@@ -131,7 +316,7 @@ enum layers {
     [_NUMBERS] = LAYOUT(
       _______, KC_F9  , KC_F10 , KC_F11 , KC_F12 , _______,                                     KC_PMNS, KC_7,    KC_8,    KC_9,    KC_PSLS, _______,
       _______, KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_LGUI,                                     KC_PPLS, KC_4   , KC_5   , KC_6   , KC_PAST, _______,
-      _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , _______, _______, _______, _______, _______, KC_0   , KC_1   , KC_2   , KC_3   , KC_PDOT, _______,
+      _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , _______, _______, _______, _______, _______, KC_0   , KC_1   , KC_2   , KC_3   ,  KC_DOT, _______,
                                  _______,MO(_NAV), _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -340,6 +525,9 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
+        case _NEW:
+            oled_write_P(PSTR("new\n"), false);
+            break;
         case _WIN:
             oled_write_P(PSTR("windows\n"), false);
             break;
@@ -386,7 +574,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
    if (index == 0) {
 		switch (index) {
 			case 0:
-			if (!clockwise && selected_layer  < 3) {
+			if (!clockwise && selected_layer  < 4) {
 				selected_layer ++;
 			} else if (clockwise && selected_layer  > 0){
 				selected_layer --;
