@@ -13,6 +13,7 @@ enum layers {
     _LINUX,
     _GAMING,
     _SYMBOLS,
+    _ACCENTS,
     _NUMBERS,
     _NAV,
     _OPTIONS
