@@ -1,0 +1,20 @@
+
+
+QMK Firmware 0.10.22
+Making [1mkyria/rev1[0m with keymap [1mnedsir[0m
+
+avr-gcc (GCC) 5.4.0
+Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Size before:
+   text	   data	    bss	    dec	    hex	filename
+      0	  27844	      0	  27844	   6cc4	.build/kyria_rev1_nedsir.hex
+
+Compiling: keyboards/kyria/keymaps/nedsir/keymap.c                                                  [31;01m[ERRORS][0m
+ | 
+ | 
+ | 
+[31;01mMake finished with errors
+[0m
