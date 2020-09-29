@@ -1,20 +1,49 @@
+ nedsi   master  …  kyria  keymaps  nedsir  qmk compile -kb kyria/rev1 -km nedsir >> compile_errors.log
+Ψ Compiling keymap with make kyria/rev1:nedsir
+keyboards/kyria/keymaps/nedsir/keymap.c: In function ‘process_record_user’:
+keyboards/kyria/keymaps/nedsir/keymap.c:99:5: error: static declaration of ‘cur_dance’ follows non-static declaration
+ int cur_dance (qk_tap_dance_state_t *state) {
+     ^
+keyboards/kyria/keymaps/nedsir/keymap.c:40:5: note: previous declaration of ‘cur_dance’ was here
+ int cur_dance (qk_tap_dance_state_t *state);
+     ^
+keyboards/kyria/keymaps/nedsir/keymap.c:117:6: error: static declaration of ‘CA_CC_CV_finished’ follows non-static declaration
+ void CA_CC_CV_finished(qk_tap_dance_state_t *state, void *user_data) {
+      ^
+keyboards/kyria/keymaps/nedsir/keymap.c:96:6: note: previous declaration of ‘CA_CC_CV_finished’ was here
+ void CA_CC_CV_finished (qk_tap_dance_state_t *state, void *user_data);
+      ^
+keyboards/kyria/keymaps/nedsir/keymap.c:171:1: error: ‘__progmem__’ attribute ignored [-Werror=attributes]
+ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+ ^
+keyboards/kyria/keymaps/nedsir/keymap.c:411:13: error: invalid storage class for function ‘render_anim’
+ static void render_anim(void) {
+             ^
+keyboards/kyria/keymaps/nedsir/keymap.c:509:13: error: invalid storage class for function ‘render_qmk_logo’
+ static void render_qmk_logo(void) {
+             ^
+keyboards/kyria/keymaps/nedsir/keymap.c:518:13: error: invalid storage class for function ‘render_status’
+ static void render_status(void) {
+             ^
+keyboards/kyria/keymaps/nedsir/keymap.c: In function ‘encoder_update_user’:
+keyboards/kyria/keymaps/nedsir/keymap.c:575:22: error: ‘selected_layer’ undeclared (first use in this function)
+    if (!clockwise && selected_layer  < 4) {
+                      ^
+keyboards/kyria/keymaps/nedsir/keymap.c:575:22: note: each undeclared identifier is reported only once for each function it appears in
+keyboards/kyria/keymaps/nedsir/keymap.c: In function ‘process_record_user’:
+keyboards/kyria/keymaps/nedsir/keymap.c:592:1: error: expected declaration or statement at end of input
+ }
+ ^
+keyboards/kyria/keymaps/nedsir/keymap.c:171:24: error: unused variable ‘keymaps’ [-Werror=unused-variable]
+ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+                        ^
+keyboards/kyria/keymaps/nedsir/keymap.c:131:23: error: unused variable ‘tap_dance_actions’ [-Werror=unused-variable]
+ qk_tap_dance_action_t tap_dance_actions[] = {
+                       ^
+keyboards/kyria/keymaps/nedsir/keymap.c:592:1: error: control reaches end of non-void function [-Werror=return-type]
+ }
+ ^
+cc1: all warnings being treated as errors
+make[1]: *** [tmk_core/rules.mk:386: .build/obj_kyria_rev1_nedsir/keyboards/kyria/keymaps/nedsir/keymap.o] Error 1
+make: *** [Makefile:584: kyria/rev1:nedsir] Error 1
 
-
-QMK Firmware 0.10.22
-Making [1mkyria/rev1[0m with keymap [1mnedsir[0m
-
-avr-gcc (GCC) 5.4.0
-Copyright (C) 2015 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-Size before:
-   text	   data	    bss	    dec	    hex	filename
-      0	  27844	      0	  27844	   6cc4	.build/kyria_rev1_nedsir.hex
-
-Compiling: keyboards/kyria/keymaps/nedsir/keymap.c                                                  [31;01m[ERRORS][0m
- | 
- | 
- | 
-[31;01mMake finished with errors
-[0m
