@@ -16,6 +16,8 @@
 #endif
 
 #define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
+#define NO_ACTION_ONESHOT
 #define TAPPING_TERM 66
 #define TAPPING_TERM_PER_KEY
 
