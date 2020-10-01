@@ -1,7 +1,6 @@
-OLED_DRIVER_ENABLE = yes   # Enables the use of OLED displays
-ENCODER_ENABLE = yes       # Enables the use of one or more encoders
-RGBLIGHT_ENABLE = no       # Disable keyboard RGB underglow
-WPM_ENABLE = yes     	     # Enable WPM measurement
+OLED_DRIVER_ENABLE = yes   # Enable the use of OLED displays
+ENCODER_ENABLE = yes       # Enable the use of one or more encoders
+RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
 SPLIT_TRANSPORT = mirror   # Allow to have information sent on both sides
 TAP_DANCE_ENABLE = yes     # Activate tap dance
 UNICODEMAP_ENABLE = yes    # Enable unicode map
@@ -13,5 +12,6 @@ SRC += combos.c			       # Source combos.c
 
 EXTRFLAGS += -flto
 
+WPM_ENABLE = no     	     # Disable WPM measurement
 MOUSEKEY_ENABLE = no       # Disable mouse keys
-BACKLIGHT_ENABLE = no     # Enable keyboard backlight (not RGB)
+BACKLIGHT_ENABLE = no      # Disable keyboard backlight (not RGB)
