@@ -16,8 +16,8 @@
 #endif
 
 #define NO_ACTION_MACRO
-#define TAPPING_TERM 200
-/* #define TAPPING_TERM_PER_KEY */
+#define TAPPING_TERM 170
+#define TAPPING_TERM_PER_KEY
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
@@ -30,6 +30,7 @@
 
 #define COMBO_VARIABLE_LEN
 #define COMBO_COUNT COMBO_VARIABLE_LEN
-#define COMBO_TERM 200
+#define COMBO_TERM 70
 
 #define UNICODE_SELECTED_MODES UC_LNX, UC_WINC
+#define UNICODE_KEY_LNX LCTL(LSFT(KC_E))

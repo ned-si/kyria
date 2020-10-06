@@ -1,7 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "keymap.h"
 #include "accented_letters.h"
-#include "keymap_fr_ch.h"
 #include <stdio.h>
 
 // Tap dance states
@@ -17,11 +16,6 @@ static td_state_t td_state;
 // function to track the current tapdance state
 int cur_dance (qk_tap_dance_state_t *state);
 
-// `finished` function for each tapdance keycode
-void CA_CC_CV_finished (qk_tap_dance_state_t *state, void *user_data);
-
-// `finished` function for each tapdance keycode
-void CA_CC_CV_finished (qk_tap_dance_state_t *state, void *user_data);
 
 // track the tapdance state to return
 int cur_dance (qk_tap_dance_state_t *state) {
@@ -42,6 +36,9 @@ int cur_dance (qk_tap_dance_state_t *state) {
 
 // handle the possible states for each tapdance keycode you define:
 
+// `finished` function for each tapdance keycode
+void CA_CC_CV_finished (qk_tap_dance_state_t *state, void *user_data);
+
 void CA_CC_CV_finished (qk_tap_dance_state_t *state, void *user_data) {
   td_state = cur_dance(state);
   switch (td_state) {
@@ -56,8 +53,25 @@ void CA_CC_CV_finished (qk_tap_dance_state_t *state, void *user_data) {
   }
 };
 
+// `finished` function for each tapdance keycode
+void UNI_W_L_finished (qk_tap_dance_state_t *state, void *user_data);
+
+void UNI_W_L_finished (qk_tap_dance_state_t *state, void *user_data) {
+  td_state = cur_dance(state);
+  switch (td_state) {
+    case SINGLE_TAP:
+      tap_code16(UC_M_WC);
+      break;
+    case DOUBLE_SINGLE_TAP:
+      tap_code16(UC_M_LN);
+    break;
+    default: break;
+  }
+};
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     [CA_CC_CV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, CA_CC_CV_finished, NULL),
+    [UNI_W_L] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, UNI_W_L_finished, NULL),
 };
 
 
@@ -111,10 +125,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NEW] = LAYOUT(
-      LGUI(KC_SPC), KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    UC_M_WC,
-      KC_LGUI,    HOME_A, HOME_S, HOME_D, HOME_F, HOME_G,                                       HOME_H,  HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, UC_M_LN,
-      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   CACCCV,_______, DED_CIR,    UC_MOD,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL ,
-                               KC_CAPS, MO(_SYMBOLS), KC_LSFT,   UNDO, REDO, KC_DEL, KC_BSPC, KC_SPC, MO(_NUMBERS), KC_MUTE
+        UNIWL,      KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,       KC_P, A(KC_SPC), 
+      _______,    HOME_A, HOME_S, HOME_D, HOME_F, HOME_G,                                       HOME_H,  HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, G(C(KC_LEFT)),
+      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS, _______,  CINEMA,  KC_DEL,   KC_N,    KC_M, KC_COMM,  KC_DOT,    KC_SLSH, G(C(KC_RGHT)),
+                              _______ , MO(_SYMBOLS), KC_TAB, CACCCV, UNDO, REDO, KC_F21, KC_SPC, MO(_NUMBERS), KC_MUTE
     ),
 
 /*  
@@ -196,10 +210,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SYMBOLS] = LAYOUT(
-      _______, _______, CH_DEG , CH_EURO, CH_EGRV, _______,                                     KC_PERC, KC_LCBR, KC_RCBR, KC_HASH, KC_CIRC, _______,
-      _______, _______, CH_EGRV, CH_CIRC, CH_EGRV, _______,                                     KC_EXLM, KC_LBRC, KC_RBRC, KC_PIPE, KC_AT  , _______,
-      _______, _______, CH_DIAE, CH_GRV , CH_CCED, _______, _______, _______, KC_AMPR, KC_EQL , KC_ASTR, KC_LPRN, KC_RPRN, KC_BSLS, KC_TILD, _______,
-                                 _______, _______, _______, _______, _______, KC_DLR , KC_GRV , _______,MO(_NAV), _______
+      _______, _______, _______, _______, _______, _______,                                     KC_PERC, KC_HASH,    DEGR, KC_PLUS, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                       KC_AT, KC_EXLM, KC_ASTR,  KC_EQL, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  KC_DLR, KC_CIRC, KC_PIPE, KC_BSLS, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______,MO(_NAV), _______
     ),
 
 /*
@@ -217,8 +231,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ACCENTS] = LAYOUT(
-       _______, A_CIRCU, _______, E_ACUTE, E_GRAVE, _______,                                     _______, U_CIRCU, I_CIRCU, O_CIRCU, _______, _______,
-       _______, A_GRAVE, _______, E_CIRCU, _______, _______,                                     _______, _______, I_UMLAU, O_UMLAU, _______, _______,
+       _______, _______, _______, E_ACUTE, E_GRAVE, _______,                                     _______, U_GRAVE, _______, O_CIRCU, _______, _______,
+       _______, A_GRAVE, _______, E_CIRCU, _______, _______,                                     _______, DED_CIR, DED_UML, _______, _______, _______,
        _______, _______, _______, C_CDILA, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -260,7 +274,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NAV] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     KC_HOME, KC_PGDN, KC_PGUP, KC_END , _______, _______, 
       _______, _______, _______, _______, _______, _______,                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______, _______,
-      _______, KC_LALT, KC_LSFT, KC_LCTL, KC_LGUI, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+      _______, KC_LALT, KC_LSFT, KC_LCTL, KC_LGUI, _______, _______, _______, _______, _______,A(KC_SPC),G(C(KC_LEFT)),G(C(KC_RGHT)), _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -303,6 +317,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
 //                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 //     ),
+
 };
 
 /* layer_state_t layer_state_set_user(layer_state_t state) { */
@@ -346,6 +361,12 @@ static void render_status(void) {
             break;
         case _SYMBOLS:
             oled_write_P(PSTR("symbols\n"), false);
+            break;
+        case _ACCENTS:
+            oled_write_P(PSTR("accents\n"), false);
+            break;
+        case _NUMBERS:
+            oled_write_P(PSTR("numbers\n"), false);
             break;
         case _NAV:
             oled_write_P(PSTR("navigation\n"), false);

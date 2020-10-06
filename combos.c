@@ -3,40 +3,39 @@
 #include "action_tapping.h" // necessary for action_tapping_process
 
 enum combo_events {
-    SPCJ_PRN,
-    SPCK_PRN,
+    F21J_PRN,
+    F21K_PRN,
     JK_BSPC,
     KL_ENT,
-    MCOMMA_MINS,
-    COMMADOT_QUOT,
-    FD_TAB,
+    MCOMMA_QUOT,
+    COMMADOT_MINS,
+    FD_GRV,
     DS_ESC,
-    CV_GRV,
-    XC_AMPR,
-    BSPCEV_EVERY,
-    BSPCU_YOU,
-    BSPCA_AND,
-    BSPCN_NOT,
-    BSPCW_WITH,
-    BSPCF_FOR,
-    BSPCH_HERE,
-    BSPCT_THE,
-    BSPCM_MENT,
-    BSPCG_ING,
-    BSPCO_OUGH,
-    BSPCI_ION,
-    BSPCIS_IONS,
-    BSPCTA_THAT,
-    BSPCQ_QUE,
-    BSPCK_KEY,
+    CV_AMPR,
+    XC_TILD,
+    F21EV_EVERY,
+    F21U_YOU,
+    F21A_AND,
+    F21N_NOT,
+    F21W_WITH,
+    F21F_FOR,
+    F21H_HERE,
+    F21T_THE,
+    F21M_MENT,
+    F21G_ING,
+    F21O_OUGH,
+    F21I_ION,
+    F21IS_IONS,
+    F21TA_THAT,
+    F21Q_QUE,
     COMBO_LENGTH
 };
 
 
 int COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM SPC_J_COMBO[] = {KC_SPC, HOME_J, COMBO_END};
-const uint16_t PROGMEM SPC_K_COMBO[] = {KC_SPC, HOME_K, COMBO_END};
+const uint16_t PROGMEM F21_J_COMBO[] = {KC_F21, HOME_J, COMBO_END};
+const uint16_t PROGMEM F21_K_COMBO[] = {KC_F21, HOME_K, COMBO_END};
 const uint16_t PROGMEM J_K_COMBO[] = {HOME_J, HOME_K, COMBO_END};
 const uint16_t PROGMEM K_L_COMBO[] = {HOME_K, HOME_L, COMBO_END};
 const uint16_t PROGMEM M_COMMA_COMBO[] = {KC_M, KC_COMMA, COMBO_END};
@@ -45,62 +44,60 @@ const uint16_t PROGMEM F_D_COMBO[] = {HOME_F, HOME_D, COMBO_END};
 const uint16_t PROGMEM D_S_COMBO[] = {HOME_D, HOME_S, COMBO_END};
 const uint16_t PROGMEM C_V_COMBO[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM X_C_COMBO[] = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM BSPC_E_V_COMBO[] = {KC_BSPC, KC_E, KC_V, COMBO_END};
-const uint16_t PROGMEM BSPC_U_COMBO[] = {KC_BSPC, KC_U, COMBO_END};
-const uint16_t PROGMEM BSPC_A_COMBO[] = {KC_BSPC, HOME_A, COMBO_END};
-const uint16_t PROGMEM BSPC_N_COMBO[] = {KC_BSPC, KC_N, COMBO_END};
-const uint16_t PROGMEM BSPC_W_COMBO[] = {KC_BSPC, KC_W, COMBO_END};
-const uint16_t PROGMEM BSPC_F_COMBO[] = {KC_BSPC, HOME_F, COMBO_END};
-const uint16_t PROGMEM BSPC_H_COMBO[] = {KC_BSPC, HOME_H, COMBO_END};
-const uint16_t PROGMEM BSPC_T_COMBO[] = {KC_BSPC, KC_T, COMBO_END};
-const uint16_t PROGMEM BSPC_M_COMBO[] = {KC_BSPC, KC_M, COMBO_END};
-const uint16_t PROGMEM BSPC_G_COMBO[] = {KC_BSPC, HOME_G, COMBO_END};
-const uint16_t PROGMEM BSPC_O_COMBO[] = {KC_BSPC, KC_O, COMBO_END};
-const uint16_t PROGMEM BSPC_I_COMBO[] = {KC_BSPC, KC_I, COMBO_END};
-const uint16_t PROGMEM BSPC_I_S_COMBO[] = {KC_BSPC, KC_I, HOME_S, COMBO_END};
-const uint16_t PROGMEM BSPC_T_A_COMBO[] = {KC_BSPC, KC_T, HOME_A, COMBO_END};
-const uint16_t PROGMEM BSPC_Q_COMBO[] = {KC_BSPC, KC_Q, COMBO_END};
-const uint16_t PROGMEM BSPC_K_COMBO[] = {KC_BSPC, KC_K, COMBO_END};
+const uint16_t PROGMEM F21_E_V_COMBO[] = {KC_F21, KC_E, KC_V, COMBO_END};
+const uint16_t PROGMEM F21_U_COMBO[] = {KC_F21, KC_U, COMBO_END};
+const uint16_t PROGMEM F21_A_COMBO[] = {KC_F21, HOME_A, COMBO_END};
+const uint16_t PROGMEM F21_N_COMBO[] = {KC_F21, KC_N, COMBO_END};
+const uint16_t PROGMEM F21_W_COMBO[] = {KC_F21, KC_W, COMBO_END};
+const uint16_t PROGMEM F21_F_COMBO[] = {KC_F21, HOME_F, COMBO_END};
+const uint16_t PROGMEM F21_H_COMBO[] = {KC_F21, HOME_H, COMBO_END};
+const uint16_t PROGMEM F21_T_COMBO[] = {KC_F21, KC_T, COMBO_END};
+const uint16_t PROGMEM F21_M_COMBO[] = {KC_F21, KC_M, COMBO_END};
+const uint16_t PROGMEM F21_G_COMBO[] = {KC_F21, HOME_G, COMBO_END};
+const uint16_t PROGMEM F21_O_COMBO[] = {KC_F21, KC_O, COMBO_END};
+const uint16_t PROGMEM F21_I_COMBO[] = {KC_F21, KC_I, COMBO_END};
+const uint16_t PROGMEM F21_I_S_COMBO[] = {KC_F21, KC_I, HOME_S, COMBO_END};
+const uint16_t PROGMEM F21_T_A_COMBO[] = {KC_F21, KC_T, HOME_A, COMBO_END};
+const uint16_t PROGMEM F21_Q_COMBO[] = {KC_F21, KC_Q, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    [SPCJ_PRN] = COMBO_ACTION(SPC_J_COMBO),
-    [SPCK_PRN] = COMBO_ACTION(SPC_K_COMBO),
+    [F21J_PRN] = COMBO_ACTION(F21_J_COMBO),
+    [F21K_PRN] = COMBO_ACTION(F21_K_COMBO),
     [JK_BSPC] = COMBO_ACTION(J_K_COMBO),
     [KL_ENT] = COMBO_ACTION(K_L_COMBO),
-    [MCOMMA_MINS] = COMBO_ACTION(M_COMMA_COMBO),
-    [COMMADOT_QUOT] = COMBO_ACTION(COMMA_DOT_COMBO),
-    [FD_TAB] = COMBO_ACTION(F_D_COMBO),
+    [MCOMMA_QUOT] = COMBO_ACTION(M_COMMA_COMBO),
+    [COMMADOT_MINS] = COMBO_ACTION(COMMA_DOT_COMBO),
+    [FD_GRV] = COMBO_ACTION(F_D_COMBO),
     [DS_ESC] = COMBO_ACTION(D_S_COMBO),
-    [CV_GRV] = COMBO_ACTION(C_V_COMBO),
-    [XC_AMPR] = COMBO_ACTION(X_C_COMBO),
-    [BSPCEV_EVERY] = COMBO_ACTION(BSPC_E_V_COMBO),
-    [BSPCU_YOU] = COMBO_ACTION(BSPC_U_COMBO),
-    [BSPCA_AND] = COMBO_ACTION(BSPC_A_COMBO),
-    [BSPCN_NOT] = COMBO_ACTION(BSPC_N_COMBO),
-    [BSPCW_WITH] = COMBO_ACTION(BSPC_W_COMBO),
-    [BSPCF_FOR] = COMBO_ACTION(BSPC_F_COMBO),
-    [BSPCH_HERE] = COMBO_ACTION(BSPC_H_COMBO),
-    [BSPCT_THE] = COMBO_ACTION(BSPC_T_COMBO),
-    [BSPCM_MENT] = COMBO_ACTION(BSPC_M_COMBO),
-    [BSPCG_ING] = COMBO_ACTION(BSPC_G_COMBO),
-    [BSPCO_OUGH] = COMBO_ACTION(BSPC_O_COMBO),
-    [BSPCI_ION] = COMBO_ACTION(BSPC_I_COMBO),
-    [BSPCIS_IONS] = COMBO_ACTION(BSPC_I_S_COMBO),
-    [BSPCTA_THAT] = COMBO_ACTION(BSPC_T_A_COMBO),
-    [BSPCQ_QUE] = COMBO_ACTION(BSPC_Q_COMBO),
-    [BSPCK_KEY] = COMBO_ACTION(BSPC_K_COMBO),
+    [CV_AMPR] = COMBO_ACTION(C_V_COMBO),
+    [XC_TILD] = COMBO_ACTION(X_C_COMBO),
+    [F21EV_EVERY] = COMBO_ACTION(F21_E_V_COMBO),
+    [F21U_YOU] = COMBO_ACTION(F21_U_COMBO),
+    [F21A_AND] = COMBO_ACTION(F21_A_COMBO),
+    [F21N_NOT] = COMBO_ACTION(F21_N_COMBO),
+    [F21W_WITH] = COMBO_ACTION(F21_W_COMBO),
+    [F21F_FOR] = COMBO_ACTION(F21_F_COMBO),
+    [F21H_HERE] = COMBO_ACTION(F21_H_COMBO),
+    [F21T_THE] = COMBO_ACTION(F21_T_COMBO),
+    [F21M_MENT] = COMBO_ACTION(F21_M_COMBO),
+    [F21G_ING] = COMBO_ACTION(F21_G_COMBO),
+    [F21O_OUGH] = COMBO_ACTION(F21_O_COMBO),
+    [F21I_ION] = COMBO_ACTION(F21_I_COMBO),
+    [F21IS_IONS] = COMBO_ACTION(F21_I_S_COMBO),
+    [F21TA_THAT] = COMBO_ACTION(F21_T_A_COMBO),
+    [F21Q_QUE] = COMBO_ACTION(F21_Q_COMBO),
 };
 
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     // Process mod-taps before the combo is fired,
     // this helps making modifier-aware combos, 
-    // like UY_PRN or BSPCN_NOT, more fluid
+    // like UY_PRN or F21N_NOT, more fluid
     // when I use them with home row mods.
     action_tapping_process((keyrecord_t){});
     mod_state = get_mods();
     switch(combo_index) {
-        case SPCJ_PRN:
+        case F21J_PRN:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     // First canceling both shifts so that shift isn't applied
@@ -126,7 +123,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
 
-        case SPCK_PRN:
+        case F21K_PRN:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -146,7 +143,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCEV_EVERY:
+        case F21EV_EVERY:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -160,7 +157,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCU_YOU:
+        case F21U_YOU:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -174,7 +171,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCA_AND:
+        case F21A_AND:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -187,8 +184,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 }
         }
         break;
-        
-        case BSPCN_NOT:
+
+        case F21N_NOT:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -208,7 +205,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCW_WITH:
+        case F21W_WITH:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -222,7 +219,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCF_FOR:
+        case F21F_FOR:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -236,7 +233,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCH_HERE:
+        case F21H_HERE:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -250,7 +247,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCT_THE:
+        case F21T_THE:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -264,7 +261,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCM_MENT:
+        case F21M_MENT:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -278,7 +275,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCG_ING:
+        case F21G_ING:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -292,7 +289,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCO_OUGH:
+        case F21O_OUGH:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -306,7 +303,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCI_ION:
+        case F21I_ION:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -320,7 +317,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCIS_IONS:
+        case F21IS_IONS:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -334,7 +331,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCTA_THAT:
+        case F21TA_THAT:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -348,7 +345,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCQ_QUE:
+        case F21Q_QUE:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     unregister_code(KC_LSHIFT);
@@ -362,19 +359,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCK_KEY:
-            if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    unregister_code(KC_LSHIFT);
-                    unregister_code(KC_RSHIFT);
-                    send_string("Key");
-                    set_mods(mod_state);
-                }
-                else {
-                    send_string("key");
-                }
-        }   
-
         case JK_BSPC:
             if (pressed) {
                 tap_code16(KC_BSPC);
@@ -387,21 +371,21 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
         break;
 
-        case MCOMMA_MINS:
-            if (pressed) {
-                tap_code16(KC_MINS);
-            }
-        break;
-
-        case COMMADOT_QUOT:
+        case MCOMMA_QUOT:
             if (pressed) {
                 tap_code16(KC_QUOT);
             }
         break;
 
-        case FD_TAB:
+        case COMMADOT_MINS:
             if (pressed) {
-                tap_code16(KC_TAB);
+                tap_code16(KC_MINS);
+            }
+        break;
+
+        case FD_GRV:
+            if (pressed) {
+                tap_code16(KC_GRV);
             }
         break;
 
@@ -411,15 +395,15 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
         break;
 
-        case CV_GRV:
+        case CV_AMPR:
             if (pressed) {
-                tap_code16(KC_GRV);
+                tap_code16(KC_AMPR);
             }
         break;
 
-        case XC_AMPR:
+        case XC_TILD:
             if (pressed) {
-                tap_code16(KC_AMPR);
+                tap_code16(KC_TILD);
             }
         break;
 

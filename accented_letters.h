@@ -28,7 +28,10 @@ enum unicode_names {
         o__UML,
         O__UML__U,
         c__CDIL,
-        C__CDIL__U
+        C__CDIL__U,
+        DED__CIR,
+        DED__UML,
+        DEGREE
 };
 
 const uint32_t PROGMEM unicode_map[] = {
@@ -57,7 +60,10 @@ const uint32_t PROGMEM unicode_map[] = {
     [o__UML]  = 0x00F6,
     [O__UML__U]  = 0x00DC,
     [c__CDIL] = 0x00E7,
-    [C__CDIL__U] = 0x00C7
+    [C__CDIL__U] = 0x00C7,
+    [DED__CIR] = 0x005E,
+    [DED__UML] = 0x0022,
+    [DEGREE] = 0x0176
 };
 
 #define E_ACUTE XP(e__ACUT, E__ACUT__U)
@@ -73,3 +79,6 @@ const uint32_t PROGMEM unicode_map[] = {
 #define I_UMLAU XP(i__UML ,  I__UML__U)
 #define O_UMLAU XP(o__UML ,  O__UML__U)
 #define C_CDILA XP(c__CDIL, C__CDIL__U)
+#define DED_CIR X(DED__CIR)
+#define DED_UML X(DED__UML)
+#define DEGR X(DEGREE)
