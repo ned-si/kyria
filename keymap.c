@@ -78,12 +78,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 /*
  * Per key tapping term settings
  */
-/* uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) { */
-    /* switch (keycode) { */
-        /* case HOME_A: */
-        /*     return TAPPING_TERM - 20; */
-        /* case HOME_S: */
-        /*     return TAPPING_TERM - 20; */
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_A:
+            return TAPPING_TERM + 50;
+        case HOME_S:
+            return TAPPING_TERM + 50;
         /* case HOME_D: */
         /*     return TAPPING_TERM - 20; */
         /* case HOME_F: */
@@ -96,14 +96,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
         /*     return TAPPING_TERM - 20; */
         /* case HOME_K: */
         /*     return TAPPING_TERM - 20; */
-        /* case HOME_L: */
-        /*     return TAPPING_TERM - 20; */
-        /* case HOME_SCLN: */
-        /*     return TAPPING_TERM - 20; */
-        /* default: */
-        /*     return TAPPING_TERM; */
-    /* } */
-/* }; */
+        case HOME_L:
+            return TAPPING_TERM + 50;
+        case HOME_SCLN:
+            return TAPPING_TERM + 50;
+        default:
+            return TAPPING_TERM;
+    }
+};
 
 
 
@@ -126,8 +126,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_NEW] = LAYOUT(
         UNIWL,      KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,       KC_P, A(KC_SPC), 
-      _______,    HOME_A, HOME_S, HOME_D, HOME_F, HOME_G,                                       HOME_H,  HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, G(C(KC_LEFT)),
-      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS, _______,  CINEMA,  KC_DEL,   KC_N,    KC_M, KC_COMM,  KC_DOT,    KC_SLSH, G(C(KC_RGHT)),
+      _______,    HOME_A, HOME_S, HOME_D, HOME_F, HOME_G,                                       HOME_H,  HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, G(C(KC_RGHT)),
+      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS, _______,  CINEMA,  KC_DEL,   KC_N,    KC_M, KC_COMM,  KC_DOT,    KC_SLSH, G(C(KC_LEFT)),
                               _______ , MO(_SYMBOLS), KC_TAB, CACCCV, UNDO, REDO, KC_F21, KC_SPC, MO(_NUMBERS), KC_MUTE
     ),
 
@@ -231,8 +231,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ACCENTS] = LAYOUT(
-       _______, _______, _______, E_ACUTE, E_GRAVE, _______,                                     _______, U_GRAVE, _______, O_CIRCU, _______, _______,
-       _______, A_GRAVE, _______, E_CIRCU, _______, _______,                                     _______, DED_CIR, DED_UML, _______, _______, _______,
+       _______, _______, _______, E_ACUTE, E_GRAVE, _______,                                     DED_UML, U_GRAVE, I_CIRCU, O_CIRCU, _______, _______,
+       _______, A_GRAVE, A_CIRCU, E_CIRCU, _______, _______,                                     DED_CIR, _______, _______, _______, _______, _______,
        _______, _______, _______, C_CDILA, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -400,7 +400,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
    if (index == 0) {
 		switch (index) {
 			case 0:
-			if (!clockwise && selected_layer  < 4) {
+			if (!clockwise && selected_layer  < 3) {
 				selected_layer ++;
 			} else if (clockwise && selected_layer  > 0){
 				selected_layer --;
