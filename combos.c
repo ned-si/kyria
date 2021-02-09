@@ -10,7 +10,6 @@ enum combo_events {
     COMMADOT_MINS,
     FD_ESC,
     CV_GRV,
-    XC_TILD,
     COMBO_LENGTH
 };
 
@@ -24,7 +23,6 @@ const uint16_t PROGMEM M_COMMA_COMBO[] = {KC_M, KC_COMMA, COMBO_END};
 const uint16_t PROGMEM COMMA_DOT_COMBO[] = {KC_COMMA, KC_DOT, COMBO_END};
 const uint16_t PROGMEM F_D_COMBO[] = {HOME_F, HOME_D, COMBO_END};
 const uint16_t PROGMEM C_V_COMBO[] = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM X_C_COMBO[] = {KC_X, KC_C, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     [SPCJ_PRN] = COMBO_ACTION(SPC_J_COMBO),
@@ -33,8 +31,7 @@ combo_t key_combos[COMBO_COUNT] = {
     [MCOMMA_QUOT] = COMBO_ACTION(M_COMMA_COMBO),
     [COMMADOT_MINS] = COMBO_ACTION(COMMA_DOT_COMBO),
     [FD_ESC] = COMBO_ACTION(F_D_COMBO),
-    [CV_GRV] = COMBO_ACTION(C_V_COMBO),
-    [XC_TILD] = COMBO_ACTION(X_C_COMBO),
+    [CV_GRV] = COMBO_ACTION(C_V_COMBO)
 };
 
 
@@ -119,12 +116,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case CV_GRV:
             if (pressed) {
                 tap_code16(KC_GRV);
-            }
-        break;
-
-        case XC_TILD:
-            if (pressed) {
-                tap_code16(KC_TILD);
             }
         break;
     }
