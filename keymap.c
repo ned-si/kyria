@@ -126,8 +126,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MAIN] = LAYOUT(
         UNIWL,      KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,       KC_P, A(KC_SPC), 
       _______,    HOME_A, HOME_S, HOME_D, HOME_F, HOME_G,                                       HOME_H,  HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, G(C(KC_RGHT)),
-      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS,  NXTPRV,     CIN,  KC_DEL,   KC_N,    KC_M, KC_COMM,  KC_DOT,    KC_SLSH, G(C(KC_LEFT)),
-                              _______ , MO(_SYMBOLS), CACCCV, KC_TAB, UNDO, REDO, KC_BSPC, KC_SPC, MO(_NUMBERS), KC_MPLY
+      MO(_OPTIONS), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS,    REDO,     CIN,  KC_DEL,   KC_N,    KC_M, KC_COMM,  KC_DOT,    KC_SLSH, G(C(KC_LEFT)),
+                              _______ , MO(_SYMBOLS), KC_TAB, KC_GRV, UNDO,NXTPRV, KC_ENT, KC_SPC, MO(_NUMBERS), KC_MPLY
     ),
 
     [_GAMING] = LAYOUT(

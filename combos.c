@@ -5,11 +5,11 @@
 enum combo_events {
     SPCJ_PRN,
     SPCK_PRN,
-    JK_ENT,
+    JK_BSPC,
     MCOMMA_QUOT,
     COMMADOT_MINS,
     FD_ESC,
-    CV_GRV,
+    CV_CACCCV,
     COMBO_LENGTH
 };
 
@@ -27,11 +27,11 @@ const uint16_t PROGMEM C_V_COMBO[] = {KC_C, KC_V, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     [SPCJ_PRN] = COMBO_ACTION(SPC_J_COMBO),
     [SPCK_PRN] = COMBO_ACTION(SPC_K_COMBO),
-    [JK_ENT] = COMBO_ACTION(J_K_COMBO),
+    [JK_BSPC] = COMBO_ACTION(J_K_COMBO),
     [MCOMMA_QUOT] = COMBO_ACTION(M_COMMA_COMBO),
     [COMMADOT_MINS] = COMBO_ACTION(COMMA_DOT_COMBO),
     [FD_ESC] = COMBO_ACTION(F_D_COMBO),
-    [CV_GRV] = COMBO_ACTION(C_V_COMBO)
+    [CV_CACCCV] = COMBO_ACTION(C_V_COMBO)
 };
 
 
@@ -89,7 +89,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case JK_ENT:
+        case JK_BSPC:
             if (pressed) {
                 tap_code16(KC_ENT);
             }
@@ -113,9 +113,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
         break;
 
-        case CV_GRV:
+        case CV_CACCCV:
             if (pressed) {
-                tap_code16(KC_GRV);
+                tap_code16(CACCCV);
             }
         break;
     }
