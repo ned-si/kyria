@@ -91,7 +91,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
         case JK_BSPC:
             if (pressed) {
-                tap_code16(KC_ENT);
+                tap_code16(KC_BSPC);
             }
         break;
 
