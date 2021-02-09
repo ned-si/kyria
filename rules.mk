@@ -7,11 +7,10 @@ UNICODEMAP_ENABLE = yes    # Enable unicode map
 COMBO_ENABLE = yes 				 # Enable combos
 NKRO_ENABLE = yes 				 # Enable NKRO: any number of key-presses at once
 LTO_ENABLE = yes  				 # Enable Link Time Optimization
+MOUSEKEY_ENABLE = yes      # Enable mouse keys
 
 SRC += combos.c			       # Source combos.c 
 
 EXTRFLAGS += -flto
 
 WPM_ENABLE = no     	     # Disable WPM measurement
-MOUSEKEY_ENABLE = no       # Disable mouse keys
-BACKLIGHT_ENABLE = no      # Disable keyboard backlight (not RGB)

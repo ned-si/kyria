@@ -8,9 +8,7 @@
 uint8_t mod_state;
 
 enum layers {
-    _NEW = 0,
-    _WIN,
-    _LINUX,
+    _MAIN = 0,
     _GAMING,
     _SYMBOLS,
     _ACCENTS,
@@ -24,7 +22,7 @@ enum layers {
 // Miscellaneous keyboard shortcuts in direct access
 #define UNDO LCTL(KC_Z)
 #define REDO LCTL(KC_Y)
-#define CINEMA A(S(KC_END))
+#define CIN A(S(KC_END))
 
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
