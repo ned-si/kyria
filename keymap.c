@@ -5,7 +5,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC, ________________MAIN_L1________________,                                           ________________MAIN_R1________________, KC_BSPC,
     CW_TOGG,    KC_A, KC_S, KC_D, KC_F, KC_G,                                                 KC_H, KC_J, KC_K, KC_L, KC_SCLN , KC_ENT,
     KC_CAPS,  ________________MAIN_L3________________,  KC_LALT, KC_LGUI, _______, MO(_ACC), ________________MAIN_R3________________, KC_DEL,
-                    _______, MO(_SYM), KC_LSFT, KC_TAB, CACCCV, _______,KC_LCTL, KC_SPC,  MO(_NUM) ,KC_MPLY
+                    _______, MO(_SYM), KC_TAB, KC_LSFT, CACCCV, _______,KC_LCTL, KC_SPC,  MO(_NUM) ,KC_MPLY
     ),
 
     [_GAMING] = LAYOUT_wrapper(
