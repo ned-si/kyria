@@ -2,17 +2,17 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MAIN] = LAYOUT_wrapper(
-    UNIWL, ________________MAIN_L1________________,                                ________________MAIN_R1________________, A(KC_SPC),
-    _______,    ________________MAIN_L2________________ ,                                ________________MAIN_R2________________,G(C(KC_RGHT)),
-    MO(_MISC),  ________________MAIN_L3________________, _______, _______, _______, _______, ________________MAIN_R3________________, G(C(KC_LEFT)),
-                    _______, MO(_SYM), LT(_MISC, KC_TAB), CACCCV, UNDO, NXTPRV,      KC_MPLY, KC_SPC, MO(_NUM), KC_MPLY
+    KC_ESC, ________________MAIN_L1________________,                                           ________________MAIN_R1________________, KC_BSPC,
+    CW_TOGG,    KC_A, KC_S, KC_D, KC_F, KC_G,                                                 KC_H, KC_J, KC_K, KC_L, KC_SCLN , KC_ENT,
+    KC_CAPS,  ________________MAIN_L3________________,  KC_LALT, KC_LGUI, _______, MO(_ACC), ________________MAIN_R3________________, KC_DEL,
+                    _______, MO(_SYM), KC_LSFT, KC_TAB, CACCCV, _______,KC_LCTL, KC_SPC,  MO(_NUM) ,KC_MPLY
     ),
 
     [_GAMING] = LAYOUT_wrapper(
       KC_TAB,       ________________MAIN_L1________________,                                ________________MAIN_R1________________,   KC_MINS,
       KC_LCTL,      ________________GAMING_L2_________________,                             ________________MAIN_R2________________, KC_QUOT,
       MO(_MISC), ________________GAMING_L3_________________, _______, _______, _______, _______, ________________MAIN_R3________________, KC_EQL ,
-                      KC_CAPS, LT(_SYM, KC_ESC), KC_SPC, KC_TAB, KC_LSFT, KC_BSPC, KC_LALT, KC_SPC, LT(_NUM, KC_ENT), KC_MUTE
+                      KC_LSFT, KC_CAPS, LT(_SYM, KC_ESC), KC_SPC, KC_TAB,  KC_BSPC, KC_LALT, LT(_NUM, KC_ENT), KC_SPC, KC_MUTE
     ),
 
     [_SYM] = LAYOUT_wrapper(
@@ -55,14 +55,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool encoder_update_user(uint8_t index, bool clockwise) {
 
     if (index == 0) {
-        // Volume control
         if (clockwise) {
          tap_code16(C(KC_TAB));
      } else {
          tap_code16(S(C(KC_TAB)));
         }
     } else if (index == 1) {
-        // Page up/Page down
         if (clockwise) {
             tap_code(KC_VOLU);
         } else {
