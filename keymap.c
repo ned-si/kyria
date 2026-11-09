@@ -1,5 +1,14 @@
 #include "nedsi.h"
 
+// Gaming rows and the NAV-layer gaming toggle, kept here since the shared
+// userspace dropped them. GAME_Z used to send A on tap; it sends Z now.
+#define GAME_A LSFT_T(KC_A)
+#define GAME_Z LCTL_T(KC_Z)
+#define ________________GAMING_L2_________________ GAME_A, KC_S, KC_D, KC_F, KC_G
+#define ________________GAMING_L3_________________ GAME_Z, KC_X, KC_C, KC_V, KC_B
+#undef ________________NAV_L3________________
+#define ________________NAV_L3________________ _______, _______, TG(_GAMING), _______, UNIWL
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MAIN] = LAYOUT_wrapper(
     CW_TOGG, ________________MAIN_L1________________,                                           ________________MAIN_R1________________, KC_CAPS,
